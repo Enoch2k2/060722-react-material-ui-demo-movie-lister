@@ -1,3 +1,16 @@
 {
-  "movies": []
+  "movies": [
+    {
+      "id": 1,
+      "title": "The Fellowship Of the Ring"
+    },
+    {
+      "id": 2,
+      "title": "The Two Towers"
+    },
+    {
+      "id": 3,
+      "title": "The Return Of The King"
+    }
+  ]
 }

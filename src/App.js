@@ -1,9 +1,29 @@
 
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MovieForm from './components/movies/MovieForm';
+import MovieList from './components/movies/MovieList';
+import Navbar from './components/navigation/Navbar';
+import Home from './components/static/Home';
+
 const App = () => {
+  const [movies, setMovies] = useState([])
+
+  useEffect(() => {
+    fetch('http://localhost:3001/movies')
+      .then(resp => resp.json())
+      .then(data => setMovies(data))
+  }, [])
+
   return (
-    <div className="App">
-      <h1>Welcome To Movie Lister version 455362343251 (I've done a lot of these)</h1>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={ <Home /> } />
+        <Route path="/movies" element={ <MovieList movies={ movies } /> } />
+        <Route path="/movies/new" element={ <MovieForm /> } />
+      </Routes>
+    </Router>
   );
 }
 
