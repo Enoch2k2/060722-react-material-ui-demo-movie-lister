@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import { Box, Button, Typography } from '@material-ui/core';
+import { MoviesContext } from '../../context/movies';
+import { useHandleChange } from '../../hooks';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,28 +11,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieForm = ({ addMovie }) => {
+const MovieForm = () => {
 
   const classes = useStyles();
 
-  const [title, setTitle] = useState("")
-  const [image_url, setImageUrl] = useState("")
+  const [title, handleTitle] = useHandleChange("")
+  const [image_url, handleImageUrl] = useHandleChange("")
+
+  const { submitMovie } = useContext(MoviesContext);
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    fetch('http://localhost:3001/movies', {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ title, image_url })
-    })
-      .then(resp => resp.json())
-      .then(movie => addMovie(movie))
-
-    
+    submitMovie({ title, image_url })
   }
 
   return (
@@ -45,7 +38,7 @@ const MovieForm = ({ addMovie }) => {
             label="Title"
             type="text"
             value={ title }
-            onChange={ e => setTitle( e.target.value )}
+            onChange={ handleTitle }
             />
         </div>
         <div>
@@ -54,7 +47,7 @@ const MovieForm = ({ addMovie }) => {
             label="Image Url"
             type="text"
             value={ image_url }
-            onChange={ e => setImageUrl( e.target.value )}
+            onChange={ handleImageUrl }
             />
         </div>
         <br />

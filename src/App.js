@@ -1,25 +1,20 @@
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MovieForm from './components/movies/MovieForm';
 import MovieList from './components/movies/MovieList';
 import Navbar from './components/navigation/Navbar';
 import Home from './components/static/Home';
 import { Container } from '@material-ui/core';
+import { MoviesContext } from './context/movies';
 
 const App = () => {
-  const [movies, setMovies] = useState([])
+
+  const { loadMovies } = useContext(MoviesContext);
 
   useEffect(() => {
-    fetch('http://localhost:3001/movies')
-      .then(resp => resp.json())
-      .then(data => setMovies(data))
+    loadMovies()
   }, [])
-
-  const addMovie = movie => {
-    console.log(movie)
-    setMovies([...movies, movie])
-  }
 
   return (
     <Router>
@@ -27,8 +22,8 @@ const App = () => {
       <Container fixed>
         <Routes>
           <Route path="/" element={ <Home /> } />
-          <Route path="/movies" element={ <MovieList movies={ movies } /> } />
-          <Route path="/movies/new" element={ <MovieForm addMovie={ addMovie } /> } />
+          <Route path="/movies" element={ <MovieList /> } />
+          <Route path="/movies/new" element={ <MovieForm /> } />
         </Routes>
       </Container>
     </Router>

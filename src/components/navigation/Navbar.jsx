@@ -26,7 +26,7 @@ const Navbar = () => {
       <AppBar position="static" className={ classes.appBar }>
         <Toolbar>
           <Typography variant="h6" className={ classes.title }>
-            Move Lister
+            Movie Lister
           </Typography>
           <Button color="inherit" to="/" component={ Link }>Home</Button>
           <Button color="inherit" to="/movies" component={ Link }>Movies</Button>

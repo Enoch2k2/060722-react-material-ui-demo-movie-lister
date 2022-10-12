@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import MovieCard from './MovieCard';
+import { MoviesContext } from '../../context/movies';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,8 +10,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieList = ({ movies }) => {
+const MovieList = () => {
   const classes = useStyles();
+
+  const { movies } = useContext(MoviesContext);
 
   const movieCards = movies.map(movie => <MovieCard key={ movie.id } movie={ movie } />)
 
